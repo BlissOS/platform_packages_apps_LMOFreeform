@@ -68,7 +68,7 @@ public class LMOFreeformDisplayAdapter extends DisplayAdapter {
         synchronized (getSyncRoot()) {
             IBinder appToken = callback.asBinder();
             FreeformFlags flags = new FreeformFlags(secure, ownContentOnly, shouldShowSystemDecorations);
-            IBinder displayToken = DisplayControl.createVirtualDisplay(name, flags.mSecure, UNIQUE_ID_PREFIX + name, refreshRate);
+            IBinder displayToken = DisplayControl.createDisplay(UNIQUE_ID_PREFIX + name, flags.mSecure, refreshRate);
             FreeformDisplayDevice device = new FreeformDisplayDevice(displayToken, UNIQUE_ID_PREFIX + name, width, height, densityDpi,
                     refreshRate, presentationDeadlineNanos,
                     flags, surface, new Callback(callback, mHandler), callback.asBinder());
@@ -191,7 +191,7 @@ public class LMOFreeformDisplayAdapter extends DisplayAdapter {
                 mSurface.release();
                 mSurface = null;
             }
-            DisplayControl.destroyVirtualDisplay(getDisplayTokenLocked());
+            DisplayControl.destroyDisplay(getDisplayTokenLocked());
             if (binderAlive) {
                 mCallback.dispatchDisplayStopped();
             }
